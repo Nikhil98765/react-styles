@@ -1,4 +1,17 @@
 import { useState } from 'react';
+import { styled } from 'styled-components';
+
+import Button from './Button.jsx';
+import Input from './Input.jsx';
+
+
+// * Styled components
+const ControlContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+`;
 
 export default function AuthInputs() {
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -21,48 +34,46 @@ export default function AuthInputs() {
   const passwordNotValid = submitted && enteredPassword.trim().length < 6;
 
   return (
-    <div id="auth-inputs">
-      <div className="controls">
-        <p>
-          <label className={`label ${emailNotValid ? 'invalid': ''}`}>Email</label>
-          <input
-            type="email"
-            className={emailNotValid ? 'invalid' : undefined}
-            // Dynamic inline styles
-            // style={{
-            //   backgroundColor: emailNotValid ? "red" : "#d1d5db",
-            // }}
-            onChange={(event) => handleInputChange("email", event.target.value)}
-          />
-        </p>
-        <p>
-          <label>Password</label>
-          <input
-            type="password"
-            className={passwordNotValid ? "invalid" : undefined}
-            onChange={(event) =>
-              handleInputChange("password", event.target.value)
-            }
-          />
-        </p>
+    <div id="auth-inputs" className='w-full mx-auto max-w-sm p-8 rounded shadow-md bg-gradient-to-b from-stone-700 to-stone-800'>
+      <div className='flex flex-col gap-2 mb-6'>
+        <Input
+          label="Email"
+          type="email"
+          // className={emailNotValid ? "invalid" : undefined}
+          // Dynamic inline styles
+          // style={{
+          //   backgroundColor: emailNotValid ? "red" : "#d1d5db",
+          // }}
+          invalid={emailNotValid}
+          onChange={(event) => handleInputChange("email", event.target.value)}
+        />
+        <Input
+          label="Password"
+          type="password"
+          invalid={passwordNotValid}
+          // className={passwordNotValid ? "invalid" : undefined}
+          onChange={(event) =>
+            handleInputChange("password", event.target.value)
+          }
+        />
       </div>
-      <div className="actions">
-        <button type="button" className="text-button">
+      <div className="flex justify-end gap-4">
+        <button type="button" className="text-amber-400 hover:text-amber-500">
           Create a new account
         </button>
-        <button className="button" onClick={handleLogin}>
+        <Button onClick={handleLogin}>
           Sign In
-        </button>
+        </Button>
       </div>
       {/* Inline styling */}
-      <p
+      {/* <p
         style={{
           color: "red",
           textAlign: "left",
         }}
       >
         some text
-      </p>
+      </p> */}
     </div>
   );
 }
